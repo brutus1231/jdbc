@@ -84,19 +84,20 @@ public class AccountJdbcDAO {
         applyExecuteQuery( query );
     }
 
-
-    void findAccountsCount() throws SQLException {
-        final String query = "select * from account ";
-
+    public void findAccountsCount() throws SQLException {
+        final String query = "SELECT count(1) as licznik FROM account ";
         Connection connection = openConnection();
-
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery( query );
-        ResultSetMetaData rsmd = resultSet.getMetaData();
-        System.out.println( rsmd.getColumnCount() );
+        ResultSet resultSet = statement.executeQuery(query);
 
-        closeConnection( connection );
+        while (resultSet.next()) {
+            int licznik = resultSet.getInt("licznik");
+            System.out.println(licznik);
+       }
+        closeConnection(connection);
     }
+
+
 
     void addAccount(int id, int balance, String number,
                     Date creationDate, Date closeDate) throws SQLException {
