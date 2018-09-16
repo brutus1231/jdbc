@@ -1,5 +1,7 @@
 package pl.sda.dao;
 
+import pl.sda.dto.AccountDto;
+
 import java.sql.*;
 
 public class AccountDaoImpl {
@@ -22,7 +24,6 @@ public class AccountDaoImpl {
 
         createStatement(query);
     }
-
 
     void findByCreationDate(String creationDate) throws SQLException {
         String query = "select * from account where date(creation_date) = ?";
@@ -69,5 +70,9 @@ public class AccountDaoImpl {
     private String removeSeparator(String str) {
         return str.isEmpty() ? "" : str.substring(0,
                 str.length() - SEPARATOR.length());
+    }
+
+    public void insertAccount(AccountDto dto) {
+
     }
 }
