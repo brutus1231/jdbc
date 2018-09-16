@@ -48,22 +48,22 @@ public class AccountJdbcDao {
     }
 
     public void findByCreationDate(String date) throws SQLException {
-        final String query = "SELECT * FROM account WHERE creation_date = ?";
+        final String query = "SELECT * FROM account WHERE date(creation_date) = ?";
         Connection connection = openConnection();
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setDate(1, Date.valueOf(date));
-     //   Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(query);
+        statement.setString(1, date);
+        ResultSet resultSet = statement.executeQuery();
 
         showAccountResult(resultSet);
         closeConnection(connection);
     }
 
     public void findAfterCreationDate(String date) throws SQLException {
-        final String query = "SELECT * FROM account WHERE creation_date > 2000-10-31";
+        final String query = "SELECT * FROM account WHERE date(creation_date) > ?";
         Connection connection = openConnection();
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(query);
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, date);
+        ResultSet resultSet = statement.executeQuery();
 
         showAccountResult(resultSet);
         closeConnection(connection);
