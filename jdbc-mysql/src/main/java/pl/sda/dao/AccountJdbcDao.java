@@ -47,18 +47,20 @@ public class AccountJdbcDao {
         closeConnection(connection);
     }
 
-    public void findByCreationDate(Date date) throws SQLException {
-        final String query = "SELECT * FROM account WHERE creation_date = " + date;
+    public void findByCreationDate(String date) throws SQLException {
+        final String query = "SELECT * FROM account WHERE creation_date = ?";
         Connection connection = openConnection();
-        Statement statement = connection.createStatement();
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setDate(1, Date.valueOf(date));
+     //   Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
 
         showAccountResult(resultSet);
         closeConnection(connection);
     }
 
-    public void findAfterCreationDate(Date date) throws SQLException {
-        final String query = "SELECT * FROM account WHERE creation_date > " + date;
+    public void findAfterCreationDate(String date) throws SQLException {
+        final String query = "SELECT * FROM account WHERE creation_date > 2000-10-31";
         Connection connection = openConnection();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
@@ -75,7 +77,7 @@ public class AccountJdbcDao {
 
         while (resultSet.next()) {
             int licznik = resultSet.getInt("licznik");
-            System.out.println("Ilość wpisów w tabeli account: " + licznik);
+            System.out.println(licznik);
         }
         closeConnection(connection);
     }
@@ -85,10 +87,10 @@ public class AccountJdbcDao {
             int accountId = resultSet.getInt("account_id");
             int balance = resultSet.getInt("balance");
             String number = resultSet.getString("number");
-            Date creationDate = resultSet.getDate("creation_date");
-            Date endDate = resultSet.getDate("end_date");
+            String creationDate = resultSet.getString("creation_date");
+            String endDate = resultSet.getString("end_date");
             System.out.println(accountId + ", " + balance + ", " + number + ", "
-                    + creationDate.toString() + ", " + endDate.toString());
+                    + creationDate + ", " + endDate);
         }
     }
 

@@ -9,12 +9,18 @@ public class Main {
         AccountJdbcDao accountJdbcDao = new AccountJdbcDao();
 
         try {
+            System.out.println("Ilość wpisów w tabeli account:");
             accountJdbcDao.findAccountsCount();
+            System.out.println("Wszystkie wpisy:");
             accountJdbcDao.findAll();
+            System.out.println("account_id = 1:");
             accountJdbcDao.findById(1);
+            System.out.println("number = 1:");
             accountJdbcDao.findByNumber("1");
-            accountJdbcDao.findByCreationDate(Date.valueOf("1999-03-04"));
-            accountJdbcDao.findAfterCreationDate(Date.valueOf("1999-03-04"));
+            System.out.println("creation_date = 2000-10-31:");
+            accountJdbcDao.findByCreationDate("2000-10-31");
+            System.out.println("creation_date after 2000-10-31:");
+            accountJdbcDao.findAfterCreationDate("2000-10-31");
         }catch (SQLException e){
             System.out.println(e);
         }
