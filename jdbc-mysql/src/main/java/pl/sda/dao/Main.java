@@ -1,8 +1,14 @@
 package pl.sda.dao;
 
+import java.sql.SQLException;
+import java.text.ParseException;
+
 public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello world");
+
+    public static void main(String[] args) throws SQLException, ParseException {
+        AccountDaoImpl dao = new AccountDaoImpl();
+        //dao.findAllAfterCreationDate("2018-09-11");
+        dao.findAccountsCount();
     }
 
 }
